@@ -18,14 +18,10 @@ url = "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-note
 
 ds = TabularDatasetFactory.from_delimited_files(url)
 
-x, y = clean_data(ds)
-
-# TODO: Split data into train and test sets.
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
 
 ### YOUR CODE HERE ###a
 
-run = Run.get_context()
+
 
 def clean_data(data):
     # Dict for cleaning data
@@ -52,7 +48,16 @@ def clean_data(data):
     x_df["poutcome"] = x_df.poutcome.apply(lambda s: 1 if s == "success" else 0)
 
     y_df = x_df.pop("y").apply(lambda s: 1 if s == "yes" else 0)
-    
+
+# clean data 
+x, y = clean_data(ds)
+
+# TODO: Split data into train and test sets.
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+
+# get run context
+run = Run.get_context()
+
 
 def main():
     # Add arguments to script
@@ -73,3 +78,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
